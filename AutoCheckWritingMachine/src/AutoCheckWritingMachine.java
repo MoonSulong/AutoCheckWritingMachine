@@ -12,7 +12,7 @@ public class AutoCheckWritingMachine {
 	private final String[] THOUSANDS = { "", "thousand", "million", "billion", "trillion" };
 
 	/**
-	 * Convert the user’s input into a phonetic text
+	 * Convert the input into a phonetic text
 	 * 
 	 * For example: $42,093.23 -> Forty-two thousand ninety-three and 23/100
 	 * dollars. $98,432,905,593.12 -> Ninety-eight billion four hundred thirty-two
@@ -94,9 +94,9 @@ public class AutoCheckWritingMachine {
 		}
 		return s.toString().trim();
 	}
-	
+
 	/**
-	 * A recursive function that process the integral number in a unit of 3 digits 
+	 * A recursive function that process the integral number in a unit of 3 digits
 	 * 
 	 * @param num Long type of intNum
 	 * @return the corresponding phonetic text
@@ -116,7 +116,7 @@ public class AutoCheckWritingMachine {
 		}
 		return ZEROTONINETEEN[(int) num / 100] + " hundred " + formatUnit(num % 100);
 	}
-	
+
 	/**
 	 * Format the number after dot
 	 * 
@@ -126,17 +126,17 @@ public class AutoCheckWritingMachine {
 	private String formatFloatNum(String floatNum) {
 		return " and " + floatNum + "/100";
 	}
-	
+
 	/**
 	 * Read input from a file in system and convert the contents
 	 * 
-	 * @param file the name of the file 
+	 * @param file the name of the file
 	 */
 	public void scanFile(File file) {
 		Scanner scanner = null;
 		try {
 			scanner = new Scanner(file);
-			while(scanner.hasNextLine()) {
+			while (scanner.hasNextLine()) {
 				String s = scanner.nextLine();
 				System.out.println(s + " -> " + cvtDollar(s));
 			}
@@ -148,13 +148,13 @@ public class AutoCheckWritingMachine {
 			}
 		}
 	}
-	
+
 	/**
-	 * A main method that create an autoCheckWritingMachine object
-	 * Run two tests, one with legal input dollar amounts
-	 * The other with illegal input and exceptions are caught
+	 * A main method that create an autoCheckWritingMachine object Run two tests,
+	 * one with legal input dollar amounts The other with illegal input and
+	 * exceptions are caught
 	 * 
-	 * @param args default 
+	 * @param args default
 	 */
 	public static void main(String[] args) {
 		AutoCheckWritingMachine autoMachine = new AutoCheckWritingMachine();
@@ -165,22 +165,26 @@ public class AutoCheckWritingMachine {
 		for (String s : testNums) {
 			System.out.println(s + " -> " + autoMachine.cvtDollar(s));
 		}
-		
+
 		// test the exception with invalid input
 		System.out.println("\nIllegal Test: ");
 		String[] illegalNums = { "", "123", "$1.2.3", "$1,&^" };
 		for (String s : illegalNums) {
 			try {
-				 autoMachine.cvtDollar(s);
+				autoMachine.cvtDollar(s);
 
 			} catch (IllegalArgumentException e) {
-				System.out.println(s + " -> " +e.getMessage());
+				System.out.println(s + " -> " + e.getMessage());
 			}
 		}
-		
+
 		// test scan file
 		System.out.println("\nInput from a file: ");
 		File file = new File("example.txt");
 		autoMachine.scanFile(file);
+		
+		// check the absolute path in different OS 
+		// String absPath = file.getAbsolutePath();
+		// System.out.println(absPath);
 	}
 }
